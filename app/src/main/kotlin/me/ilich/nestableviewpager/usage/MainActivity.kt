@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         tabs.setupWithViewPager(pager)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         NestablePagerAdapterHelper.onCreateOptionsMenu(menu, pager, menuInflater)
         return super.onCreateOptionsMenu(menu)
     }

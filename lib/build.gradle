@@ -5,13 +5,15 @@ apply plugin: 'maven'
 
 def groupId = "me.ilich"
 def artifactId = "NestableViewPager"
-def version = "0.1.2"
+def version = "0.1.3"
 
 def releaseDir = "${buildDir}/release"
 
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
+
+    publishNonDefault true
 
     defaultConfig {
         minSdkVersion 15
@@ -76,6 +78,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:design:24.0.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 repositories {
