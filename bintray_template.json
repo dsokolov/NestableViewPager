@@ -1,0 +1,22 @@
+{
+
+  "package": {
+    "name": "NestableViewPager",
+    "repo": "maven",
+    "subject": "dsokolov"
+  },
+
+  "version": {
+    "name": "[version]"
+  },
+
+  "files": [
+    {
+      "includePattern": "NestableViewPager/build/release/(.*)",
+      "uploadPattern": "$1"
+    }
+  ],
+
+  "publish": true
+
+}
