@@ -1,19 +1,15 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'maven'
 
 def groupId = "me.ilich"
 def artifactId = "NestableViewPager"
-def version = "0.1.4"
+def version = "0.1.5"
 
 def releaseDir = "${buildDir}/release"
 
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
-
-    publishNonDefault true
 
     defaultConfig {
         minSdkVersion 15
@@ -27,9 +23,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
 }
 
 
@@ -38,7 +31,6 @@ configurations {
 }
 
 task javaDocs(type: Javadoc) {
-    excludes = ['**/*.kt']
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     classpath += configurations.javadocDependencies
@@ -80,7 +72,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:design:24.0.0'
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 repositories {
     mavenCentral()
