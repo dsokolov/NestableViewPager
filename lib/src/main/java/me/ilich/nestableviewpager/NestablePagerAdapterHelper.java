@@ -2,6 +2,8 @@ package me.ilich.nestableviewpager;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -23,16 +25,25 @@ public class NestablePagerAdapterHelper {
 
     private static void fillIdList(ViewPager viewPager, List<Integer> menuIdList) {
         int currentPageIndex = viewPager.getCurrentItem();
-        FragmentPagerAdapter adapter = (FragmentPagerAdapter) viewPager.getAdapter();
-        Fragment f = adapter.getItem(currentPageIndex);
-        if (f instanceof NestablePagerItem) {
-            int[] items = ((NestablePagerItem) f).getOptionsMenuIds();
-            for (int item : items) {
-                menuIdList.add(item);
-            }
-            ViewPager nestedViewPager = ((NestablePagerItem) f).getNestedViewPager();
-            if (nestedViewPager != null) {
-                fillIdList(nestedViewPager, menuIdList);
+        PagerAdapter adapter = viewPager.getAdapter();
+        final Fragment fragment;
+        if (adapter instanceof FragmentPagerAdapter) {
+            fragment = ((FragmentPagerAdapter) adapter).getItem(currentPageIndex);
+        } else if (adapter instanceof FragmentStatePagerAdapter) {
+            fragment = ((FragmentStatePagerAdapter) adapter).getItem(currentPageIndex);
+        } else {
+            fragment = null;
+        }
+        if (fragment != null) {
+            if (fragment instanceof NestablePagerItem) {
+                int[] items = ((NestablePagerItem) fragment).getOptionsMenuIds();
+                for (int item : items) {
+                    menuIdList.add(item);
+                }
+                ViewPager nestedViewPager = ((NestablePagerItem) fragment).getNestedViewPager();
+                if (nestedViewPager != null) {
+                    fillIdList(nestedViewPager, menuIdList);
+                }
             }
         }
     }
