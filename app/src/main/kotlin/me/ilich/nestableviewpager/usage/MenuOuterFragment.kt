@@ -7,7 +7,7 @@ import android.view.*
 import android.widget.Toast
 import me.ilich.nestableviewpager.NestablePagerItem
 
-class MenuInnerFragment : Fragment(), NestablePagerItem {
+class MenuOuterFragment : Fragment(), NestablePagerItem {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_main, container, false)
@@ -15,12 +15,12 @@ class MenuInnerFragment : Fragment(), NestablePagerItem {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.inner, menu)
+        inflater?.inflate(R.menu.outer, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if(item?.itemId==R.id.menu_inner_1){
-            Toast.makeText(context, "inner 1", Toast.LENGTH_SHORT).show()
+        if(item?.itemId==R.id.menu_outer_1){
+            Toast.makeText(context, "outer 1", Toast.LENGTH_SHORT).show()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -28,7 +28,7 @@ class MenuInnerFragment : Fragment(), NestablePagerItem {
     override fun getNestedViewPager(): ViewPager? = null
 
     companion object {
-        fun create(): MenuInnerFragment = MenuInnerFragment()
+        fun create(): MenuOuterFragment = MenuOuterFragment()
     }
 
 }

@@ -3,6 +3,7 @@ package me.ilich.nestableviewpager.usage
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import me.ilich.nestableviewpager.NestablePagerAdapterHelper
 
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         pager.adapter = Adapter(supportFragmentManager, listOf(
                 NoMenuFragment.create(),
                 NoMenuFragment.create(),
-                MenuOutterFragment.create(),
+                MenuOuterFragment.create(),
                 PagerFragment.create(),
                 NoMenuFragment.create()
         ))
@@ -26,6 +27,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         NestablePagerAdapterHelper.onCreateOptionsMenu(menu, pager, menuInflater)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        var b = NestablePagerAdapterHelper.onOptionsItemSelected(item, pager)
+        if(!b){
+            b = super.onOptionsItemSelected(item)
+        }
+        return b
     }
 
 }

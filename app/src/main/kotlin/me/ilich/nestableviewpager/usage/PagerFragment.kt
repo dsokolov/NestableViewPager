@@ -34,6 +34,4 @@ class PagerFragment : Fragment(), NestablePagerItem {
 
     override fun getNestedViewPager(): ViewPager? = pager
 
-    override fun getOptionsMenuIds(): IntArray = intArrayOf()
-
 }

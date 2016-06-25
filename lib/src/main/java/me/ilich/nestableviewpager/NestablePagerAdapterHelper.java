@@ -8,22 +8,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.view.MenuItem;
 
 public class NestablePagerAdapterHelper {
 
     public static void onCreateOptionsMenu(Menu menu, ViewPager viewPager, MenuInflater menuInflater) {
         menu.clear();
-        List<Integer> menuItemIds = new ArrayList<>();
-        fillIdList(viewPager, menuItemIds);
-        for (int menuItemId : menuItemIds) {
-            menuInflater.inflate(menuItemId, menu);
-        }
+        fillIdList(viewPager, menu, menuInflater);
     }
 
-    private static void fillIdList(ViewPager viewPager, List<Integer> menuIdList) {
+    private static void fillIdList(ViewPager viewPager, Menu menu, MenuInflater menuInflater) {
         int currentPageIndex = viewPager.getCurrentItem();
         PagerAdapter adapter = viewPager.getAdapter();
         final Fragment fragment;
@@ -35,17 +29,38 @@ public class NestablePagerAdapterHelper {
             fragment = null;
         }
         if (fragment != null) {
+            fragment.onCreateOptionsMenu(menu, menuInflater);
             if (fragment instanceof NestablePagerItem) {
-                int[] items = ((NestablePagerItem) fragment).getOptionsMenuIds();
-                for (int item : items) {
-                    menuIdList.add(item);
-                }
                 ViewPager nestedViewPager = ((NestablePagerItem) fragment).getNestedViewPager();
                 if (nestedViewPager != null) {
-                    fillIdList(nestedViewPager, menuIdList);
+                    fillIdList(nestedViewPager, menu, menuInflater);
                 }
             }
         }
+    }
+
+    public static boolean onOptionsItemSelected(MenuItem menuItem, ViewPager viewPager) {
+        boolean b = false;
+        int currentPageIndex = viewPager.getCurrentItem();
+        PagerAdapter adapter = viewPager.getAdapter();
+        final Fragment fragment;
+        if (adapter instanceof FragmentPagerAdapter) {
+            fragment = ((FragmentPagerAdapter) adapter).getItem(currentPageIndex);
+        } else if (adapter instanceof FragmentStatePagerAdapter) {
+            fragment = ((FragmentStatePagerAdapter) adapter).getItem(currentPageIndex);
+        } else {
+            fragment = null;
+        }
+        if (fragment != null) {
+            b = fragment.onOptionsItemSelected(menuItem);
+            if (!b && fragment instanceof NestablePagerItem) {
+                ViewPager nestedViewPager = ((NestablePagerItem) fragment).getNestedViewPager();
+                if (nestedViewPager != null) {
+                    b = onOptionsItemSelected(menuItem, nestedViewPager);
+                }
+            }
+        }
+        return b;
     }
 
     public static void addListenerToPager(ViewPager pager, final AppCompatActivity activity) {

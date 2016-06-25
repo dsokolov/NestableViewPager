@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_c"
+        android:id="@+id/menu_outer_1"
         android:icon="@android:drawable/ic_menu_call"
         android:orderInCategory="1"
-        android:title="MenuC"
+        android:title="Outer 1"
         app:showAsAction="always" />
 </menu>

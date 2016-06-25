@@ -5,8 +5,6 @@ import android.support.v4.view.ViewPager;
 
 public interface NestablePagerItem {
 
-    int[] getOptionsMenuIds();
-
     @Nullable
     ViewPager getNestedViewPager();
 
